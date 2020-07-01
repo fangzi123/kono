@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wdcloud.kono.mapper.ErpUserMapper">
+  <resultMap id="BaseResultMap" type="com.wdcloud.kono.model.ErpUser">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="id_user" jdbcType="BIGINT" property="idUser" />
+    <result column="username" jdbcType="VARCHAR" property="username" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="prenom" jdbcType="VARCHAR" property="prenom" />
+    <result column="nom" jdbcType="VARCHAR" property="nom" />
+    <result column="mailgem" jdbcType="VARCHAR" property="mailgem" />
+    <result column="role_user" jdbcType="VARCHAR" property="roleUser" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+
+    <insert id="batchInsert">
+      INSERT INTO `erp_user`( `id_user`, `username`, `password`, `prenom`,
+                             `nom`, `mailgem`,`role_user`,
+        `status`,  `create_time`, `update_time`)
+      VALUES
+              <foreach collection="list" item="item" separator=",">
+                ( #{item.id_user},  #{item.Username},  #{item.Password},  #{item.Prenom},
+                #{item.Nom},  #{item.MailGEM},  #{item.Role_user},
+                 0,now(),now() )
+              </foreach>
+    </insert>
+</mapper>

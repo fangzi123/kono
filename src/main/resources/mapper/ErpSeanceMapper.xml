@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wdcloud.kono.mapper.ErpSeanceMapper">
+  <resultMap id="BaseResultMap" type="com.wdcloud.kono.model.ErpSeance">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="id_seance" jdbcType="BIGINT" property="idSeance" />
+    <result column="date_debu" jdbcType="VARCHAR" property="dateDebu" />
+    <result column="date_de_fin" jdbcType="VARCHAR" property="dateDeFin" />
+    <result column="nom" jdbcType="VARCHAR" property="nom" />
+    <result column="id_instancegroupetd" jdbcType="BIGINT" property="idInstancegroupetd" />
+    <result column="id_prof" jdbcType="BIGINT" property="idProf" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <insert id="batchInsert">
+    INSERT INTO `erp_seance`( `id_seance`, `date_debu`, `date_de_fin`,
+    `nom`, `id_instancegroupetd`,`id_prof`,
+    `status`,  `create_time`, `update_time`)
+    VALUES
+    <foreach collection="list" item="item" separator=",">
+      ( #{item.Id_seance},  #{item.Date_debut},  #{item.Date_de_fin},
+      #{item.Nom},  #{item.id_instancegroupetd},  #{item.Id_prof},
+      0,now(),now() )
+    </foreach>
+  </insert>
+</mapper>

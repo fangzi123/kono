@@ -1,0 +1,27 @@
+management:
+    endpoint:
+        health:
+            show-details: always
+    endpoints:
+        jmx:
+            exposure:
+                include: '*'
+        web:
+            exposure:
+                include: '*'
+    server:
+        port: 8082
+server:
+    port: 8081
+
+spring:
+    profiles:
+      active: @env@
+    application:
+        name: kono
+
+mybatis:
+  type-aliases-package: com.wdcloud.kono.model
+  mapper-locations: classpath:mapper/**/*.xml
+
+

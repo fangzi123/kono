@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wdcloud.kono.mapper.ErpInstanceCursusMapper">
+  <resultMap id="BaseResultMap" type="com.wdcloud.kono.model.ErpInstanceCursus">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="id_instancecursus" jdbcType="BIGINT" property="idInstancecursus" />
+    <result column="id_cursus" jdbcType="BIGINT" property="idCursus" />
+    <result column="id_anneescolaire" jdbcType="BIGINT" property="idAnneescolaire" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <insert id="batchInsert">
+    INSERT INTO `erp_instance_cursus`( `id_instancecursus`, `id_cursus`, `id_anneescolaire`,
+    `status`,  `create_time`, `update_time`)
+    VALUES
+    <foreach collection="list" item="item" separator=",">
+      ( #{item.id_instancecursus},  #{item.Id_cursus},  #{item.id_anneescolaire},
+      0,now(),now() )
+    </foreach>
+  </insert>
+</mapper>
