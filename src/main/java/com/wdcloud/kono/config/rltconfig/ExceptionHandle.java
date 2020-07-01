@@ -1,5 +1,6 @@
 package com.wdcloud.kono.config.rltconfig;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.BindException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -8,6 +9,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 @ControllerAdvice
 @ResponseBody
+@Slf4j
 public class ExceptionHandle {
 
     // 用来捕获和处理参数校验异常
@@ -23,6 +25,7 @@ public class ExceptionHandle {
 
     @ExceptionHandler(Exception.class)
     public CommonResult exceptionHandler(Exception e){
-        return new CommonResult(e.getMessage());
+        log.error("=========异常>\n",e);
+        return new CommonResult(Code.ERROR);
     }
 }
