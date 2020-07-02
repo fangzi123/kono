@@ -45,12 +45,13 @@ public class KonoTask {
      * 每天凌晨2点执行一次
      * @throws Exception
      */
-    @Scheduled(cron = "0 0/30 * * * ?")
-//    @Scheduled(cron = "0 0 2 * * ?")
+//    @Scheduled(cron = "0 0/30 * * * ?")
+//    @Scheduled(cron = "0/10 * * * * ?")
+    @Scheduled(cron = "0 0 2 * * ?")
     public void task() throws Exception {
-      log.info("【sync】开始时间:{}",System.currentTimeMillis());
+      log.info("【KonoTask】开始时间:{}",System.currentTimeMillis());
       work();
-      log.info("【sync】结束时间:{}",System.currentTimeMillis());
+      log.info("【KonoTask】结束时间:{}",System.currentTimeMillis());
     }
 
     private void work() {

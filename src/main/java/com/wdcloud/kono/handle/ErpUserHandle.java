@@ -29,7 +29,9 @@ public class ErpUserHandle implements Handle {
     @Override
     public void handleRequest(Request request) {
         log.info("{} 开始工作!",this.getClass());
-
+        if (ListUtils.isNotEmpty(mapper.selectAll())) {
+            return;
+        }
         List<ErpUserDTO> dtoList=SysUtils.getDataFromKono(Constants.TABLE_ERP_USER, ErpUserDTO.class);
         if (ListUtils.isNotEmpty(dtoList)) {
             Example example= new Example(ErpUser.class);

@@ -42,7 +42,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class HttpClientUtil {
-    public static final String COMMUNICATION_FAILURE ="30000";
+
+    public static final String COMMUNICATION_FAILURE =" { \"code\": 500, \"msg\": \"communication_failure\"}";
     private static final int MAX_SOKET_TIMEOUT =8000;
     private static final int MAX_CONNECTION_TIMEOUT = 8000;
     private static final RequestConfig reqConfig = RequestConfig.custom()//.setProxy(new HttpHost("192.168.20.6",3128))
