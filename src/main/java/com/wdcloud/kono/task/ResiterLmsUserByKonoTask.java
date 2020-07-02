@@ -30,8 +30,8 @@ public class ResiterLmsUserByKonoTask {
      * 每天凌晨2点执行一次
      * @throws Exception
      */
-//    @Scheduled(cron = "0 0/5 * * * ?")
-    @Scheduled(cron = "0/5 * * * * ?")
+    @Scheduled(cron = "0 0/30 * * * ?")
+//    @Scheduled(cron = "0/5 * * * * ?")
 //    @Scheduled(cron = "0 0 2 * * ?")
     public void task() throws Exception {
       log.info("【ResiterLmsUserByKonoTask】开始时间:{}",System.currentTimeMillis());
