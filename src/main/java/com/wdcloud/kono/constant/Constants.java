@@ -24,4 +24,5 @@ public class Constants {
     public static final String TABLE_ERP_MODULE= "erp_module";
     public static final String TABLE_ERP_LIAISONGROUPEINSTANCEMODULE= "ERP_liaisongroupeinstancemodule";
     public static final String TABLE_ERP_SEANCE= "ERP_Seance";
+    public static final String TABLE_ERP_ENTITEJURIDIQUEPROFIL= "erp_entitejuridiqueprofil";
 }
