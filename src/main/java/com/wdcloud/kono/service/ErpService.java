@@ -1,5 +1,7 @@
 package com.wdcloud.kono.service;
 
+import com.wdcloud.kono.controller.dto.TableDTO;
+
 import java.util.List;
 
 /**
@@ -9,5 +11,5 @@ import java.util.List;
 public interface ErpService {
     String support();
 
-    <T> List<T> getErp();
+    <T> List<T> getErp(TableDTO dto);
 }

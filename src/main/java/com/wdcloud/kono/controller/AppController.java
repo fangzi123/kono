@@ -1,11 +1,15 @@
 package com.wdcloud.kono.controller;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.wdcloud.kono.config.rltconfig.BaseException;
 import com.wdcloud.kono.constant.Constants;
 import com.wdcloud.kono.controller.dto.TableDTO;
 import com.wdcloud.kono.mapper.ErpUserMapper;
 import com.wdcloud.kono.service.ErpService;
 import com.wdcloud.kono.service.ErpServiceFactory;
+import org.apache.poi.ss.formula.functions.T;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -30,6 +34,7 @@ public class AppController {
             throw new BaseException();
         }
         ErpService erpService= erpServiceFactory.getInstance(dto.getNameTable());
-        return erpService.getErp();
+        PageHelper.startPage(dto.getPageIndex(),dto.getPageSize());
+        return PageInfo.of(erpService.getErp(dto));
     }
 }
