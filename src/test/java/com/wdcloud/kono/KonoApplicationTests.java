@@ -11,16 +11,15 @@ class KonoApplicationTests {
 
     @Test
     void contextLoads() {
-        Properties properties = new Properties();
-        properties.setProperty("username","123");
-        String rlt=PropertyParser.parse("${username:root}",properties);
-        System.out.println("===========>"+rlt);
+
     }
 
     public static void main(String[] args) {
         Properties properties = new Properties();
-        properties.setProperty("username","123");
-        String rlt=PropertyParser.parse("username",properties);
+        properties.setProperty("username","wangff");
+        properties.setProperty("pwd","123456");
+//        properties.setProperty(PropertyParser.KEY_ENABLE_DEFAULT_VALUE, "true");
+        String rlt=PropertyParser.parse("用户名：${username} 密码：${pwd}",properties);
         System.out.println("===========>"+rlt);
     }
 }
