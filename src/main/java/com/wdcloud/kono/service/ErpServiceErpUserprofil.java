@@ -25,7 +25,7 @@ public class ErpServiceErpUserprofil implements ErpService {
 
     @Override
     public String support() {
-        return Constants.TABLE_ERP_USER;
+        return Constants.TABLE_ERP_USERPROFIL;
     }
 
     @Override
