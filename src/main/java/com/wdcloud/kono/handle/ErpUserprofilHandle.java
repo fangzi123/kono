@@ -1,11 +1,14 @@
 package com.wdcloud.kono.handle;
 
+import com.wdcloud.kono.constant.Constants;
 import com.wdcloud.kono.handle.base.Handle;
 import com.wdcloud.kono.handle.base.Request;
 import com.wdcloud.kono.handle.dto.ErpUserDTO;
+import com.wdcloud.kono.handle.dto.ErpUserprofilDTO;
 import com.wdcloud.kono.mapper.ErpUserMapper;
+import com.wdcloud.kono.mapper.ErpUserprofilMapper;
 import com.wdcloud.kono.model.ErpUser;
-import com.wdcloud.kono.constant.Constants;
+import com.wdcloud.kono.model.ErpUserprofil;
 import com.wdcloud.kono.utils.SysUtils;
 import com.wdcloud.utils.ListUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -20,13 +23,13 @@ import java.util.List;
  * @author wangff
  * @date 2020/6/29 17:07
  */
-@Order(100)
+@Order(200)
 @Slf4j
 @Component
-public class ErpUserHandle implements Handle {
+public class ErpUserprofilHandle implements Handle {
 
     @Autowired
-    private ErpUserMapper mapper;
+    private ErpUserprofilMapper mapper;
 
     @Override
     public void handleRequest(Request request) {
@@ -34,9 +37,9 @@ public class ErpUserHandle implements Handle {
         if (ListUtils.isNotEmpty(mapper.selectAll())) {
             return;
         }
-        List<ErpUserDTO> dtoList=SysUtils.getDataFromKono(Constants.TABLE_ERP_USER, ErpUserDTO.class);
+        List<ErpUserprofilDTO> dtoList=SysUtils.getDataFromKono(Constants.TABLE_ERP_USERPROFIL, ErpUserprofilDTO.class);
         if (ListUtils.isNotEmpty(dtoList)) {
-            Example example= new Example(ErpUser.class);
+            Example example= new Example(ErpUserprofil.class);
             example.createCriteria().andNotIn("id",List.of(0));
             mapper.deleteByExample(example);
             mapper.batchInsert(dtoList);

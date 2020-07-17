@@ -37,15 +37,20 @@
                              targetProject="src/main/java" type="XMLMAPPER"/>
 
         <!--代码自动生成-->
+        <table schema="lms" tableName="erp_userprofil">
+        <property name="useActualColumnNames" value="false"/>
+        <generatedKey column="id" sqlStatement="mysql" identity="true"/>
+        </table>
+
         <!--<table schema="lms" tableName="sys_user">-->
         <!--<property name="useActualColumnNames" value="false"/>-->
         <!--<generatedKey column="id" sqlStatement="mysql" identity="true"/>-->
         <!--</table>-->
 
-        <table schema="lms" tableName="erp_entitejuridiqueprofil">
-        <property name="useActualColumnNames" value="false"/>
-        <generatedKey column="id" sqlStatement="mysql" identity="true"/>
-        </table>
+        <!--<table schema="lms" tableName="erp_entitejuridiqueprofil">-->
+        <!--<property name="useActualColumnNames" value="false"/>-->
+        <!--<generatedKey column="id" sqlStatement="mysql" identity="true"/>-->
+        <!--</table>-->
 
         <!--<table schema="lms" tableName="erp_user">-->
             <!--<property name="useActualColumnNames" value="false"/>-->
