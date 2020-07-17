@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.wdcloud.kono.config.rltconfig.Code;
 import com.wdcloud.kono.mapper.ErpUserMapper;
 import com.wdcloud.kono.model.ErpUser;
+import com.wdcloud.kono.task.dto.UserDTO;
 import com.wdcloud.kono.task.dto.UserSignUpVo;
 import com.wdcloud.kono.utils.HttpClientUtil;
 import com.wdcloud.utils.ListUtils;
@@ -11,7 +12,6 @@ import com.wdcloud.utils.StringUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -28,6 +28,7 @@ public class ResiterLmsUserByKonoTask {
 
     /**
      * 每天凌晨2点执行一次
+     * add lms user By kono
      * @throws Exception
      */
 //    @Scheduled(cron = "0 0/30 * * * ?")
@@ -43,14 +44,17 @@ public class ResiterLmsUserByKonoTask {
        List<ErpUser> erpUserList= mapper.select(ErpUser.builder().status(0).build());
         if (ListUtils.isNotEmpty(erpUserList)) {
             erpUserList.forEach(erpUser -> {
-
-                UserSignUpVo signUpVo = UserSignUpVo.builder()
+                //todo get user`s org
+                UserDTO signUpVo = UserDTO.builder()
                         .firstName(erpUser.getPrenom())
                         .lastName(erpUser.getNom())
-                        .locationId(7)
+                        .loginId(erpUser.getNom())
+                        .orgId(null)
+                        .orgTreeId(null)
+                        .locationId(64)
+                        .roleId(getRoleId(erpUser.getRoleUser()))
                         .password(erpUser.getPassword())
-                        .username(erpUser.getUsername())
-                        .email(StringUtil.isEmpty(erpUser.getMailgem())?"lms@lms.com":erpUser.getMailgem())
+                        .email(erpUser.getMailgem())
                         .build();
                 String rlt=HttpClientUtil.sendPostRequestByJson(lmsUrl, JSON.toJSONString(signUpVo));
                 log.info("======注册结果======>\n{}",rlt);
@@ -59,6 +63,15 @@ public class ResiterLmsUserByKonoTask {
                 }
             });
         }
+    }
+
+    private Long getRoleId(String roleUser) {
+        if ("Enseignant".equals(roleUser)) {
+            return 2L;
+        }else if ("Utilistateur".equals(roleUser)) {
+            return 4L;
+        }
+        return 4L;
     }
 
 }

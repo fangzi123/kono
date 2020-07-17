@@ -18,6 +18,7 @@ public class KonoTask {
 
     /**
      * 每天凌晨2点执行一次
+     * sync kono to lms
      * @throws Exception
      */
     @Scheduled(cron = "0 0/5 * * * ?")
