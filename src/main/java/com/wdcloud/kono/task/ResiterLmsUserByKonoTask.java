@@ -44,9 +44,9 @@ public class ResiterLmsUserByKonoTask {
      * 注册lms用户
      * @throws Exception
      */
-//    @Scheduled(cron = "0 0/5 * * * ?")
+    @Scheduled(cron = "0 0/1 * * * ?")
 //    @Scheduled(cron = "0/5 * * * * ?")
-    @Scheduled(cron = "0 0 2 * * ?")
+//    @Scheduled(cron = "0 0 2 * * ?")
     public void task() throws Exception {
       log.info("【ResiterLmsUserByKonoTask】开始时间:{}",System.currentTimeMillis());
       work();
@@ -58,23 +58,29 @@ public class ResiterLmsUserByKonoTask {
         if (ListUtils.isNotEmpty(erpUserList)) {
             erpUserList.forEach(erpUser -> {
 
-                ErpUserprofil erpUserprofil= erpUserprofilMapper.selectOne(ErpUserprofil.builder().idUser(erpUser.getIdUser()).build());
-                if (erpUserprofil == null) {
+                List<ErpUserprofil> erpUserprofilList= erpUserprofilMapper.select(ErpUserprofil.builder().idUser(erpUser.getIdUser()).build());
+                if (ListUtils.isEmpty(erpUserprofilList)) {
                     log.info("IdUser===={}没有机构",erpUser.getIdUser());
                 }
+                ErpUserprofil erpUserprofil = erpUserprofilList.get(0);
 
                 ErpEntitejuridiqueprofil erpEntitejuridiqueprofil = erpEntitejuridiqueprofilMapper.selectOne(ErpEntitejuridiqueprofil.builder().idProfil(erpUserprofil.getIdProfil()).build());
                 if (erpEntitejuridiqueprofil != null) {
                     //机构ID
                     ErpEntitejuridique que=erpEntitejuridiqueMapper.selectOne(ErpEntitejuridique.builder().idEntitejuridique(erpEntitejuridiqueprofil.getIdEntitejuridique()).build());
-                    SysOrg sysOrg=sysOrgMapper.selectOne(SysOrg.builder().sisId(que.getNom()).build());
+                    SysOrg sysOrg=sysOrgMapper.selectOne(SysOrg.builder().name(que.getNom()).build());
                     if (sysOrg == null) {
                         JSONObject json = new JSONObject();
-                        json.put("userName",que.getNom());
+                        json.put("userName",que.getCode()+que.getCode());
                         json.put("pwd","12345678");
                         json.put("orgName",que.getNom());
                         String org=HttpClientUtil.sendPostRequestByJson(initRootOrg, json.toJSONString());
                         log.info("org注册结果==>{}",org);
+                        try {
+                            Thread.sleep(500);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
                         sysOrg = sysOrgMapper.selectOne(SysOrg.builder().sisId(que.getCode()).build());
                     }
                     UserDTO signUpVo = UserDTO.builder()
