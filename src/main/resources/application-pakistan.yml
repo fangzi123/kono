@@ -26,3 +26,4 @@ spring:
 
 lms:
     url: http://127.0.0.1:8080/adminUser/add
+    initRootOrg: http://127.0.0.1:8080/rootOrg/init

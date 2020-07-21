@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wdcloud.kono.mapper.ErpUserprofilMapper">
+  <resultMap id="BaseResultMap" type="com.wdcloud.kono.model.ErpUserprofil">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="id_userprofil" jdbcType="BIGINT" property="idUserprofil" />
+    <result column="id_profil" jdbcType="BIGINT" property="idProfil" />
+    <result column="id_user" jdbcType="BIGINT" property="idUser" />
+    <result column="nomuser" jdbcType="VARCHAR" property="nomuser" />
+    <result column="prenomuser" jdbcType="VARCHAR" property="prenomuser" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+
+  <insert id="batchInsert">
+    INSERT INTO `erp_userprofil`( `id_userprofil`, `id_profil`, `id_user`, `nomuser`, `prenomuser`,
+    `status`,  `create_time`, `update_time`)
+    VALUES
+    <foreach collection="list" item="item" separator=",">
+      ( #{item.id_userprofil},  #{item.id_profil},  #{item.id_user}, #{item.Nomuser},  #{item.prenomuser},
+      0,now(),now() )
+    </foreach>
+  </insert>
+</mapper>

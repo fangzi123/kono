@@ -1,9 +1,17 @@
 package com.wdcloud.kono.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.*;
-
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@Data
 @Table(name = "erp_entitejuridique")
 public class ErpEntitejuridique implements Serializable {
     @Id

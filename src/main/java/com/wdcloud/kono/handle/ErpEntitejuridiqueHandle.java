@@ -31,7 +31,9 @@ public class ErpEntitejuridiqueHandle implements Handle {
     @Override
     public void handleRequest(Request request) {
         log.info("{} 开始工作!",this.getClass());
-
+        if (ListUtils.isNotEmpty(erpEntitejuridiqueMapper.selectAll())) {
+            return;
+        }
         List<ErpEntitejuridiqueDTO> dtoList= SysUtils.getDataFromKono(Constants.TABLE_ERP_ENTITEJURIDIQUE, ErpEntitejuridiqueDTO.class);
         if (ListUtils.isNotEmpty(dtoList)) {
             Example example= new Example(ErpEntitejuridique.class);
