@@ -44,7 +44,7 @@ public class ResiterLmsUserByKonoTask {
      * 注册lms用户
      * @throws Exception
      */
-//    @Scheduled(cron = "0 0/30 * * * ?")
+//    @Scheduled(cron = "0 0/5 * * * ?")
 //    @Scheduled(cron = "0/5 * * * * ?")
     @Scheduled(cron = "0 0 2 * * ?")
     public void task() throws Exception {

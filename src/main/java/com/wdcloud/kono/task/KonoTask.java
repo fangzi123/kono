@@ -21,9 +21,9 @@ public class KonoTask {
      * sync kono to lms
      * @throws Exception
      */
-    @Scheduled(cron = "0 0/5 * * * ?")
+//    @Scheduled(cron = "0 0/5 * * * ?")
 //    @Scheduled(cron = "0/10 * * * * ?")
-//    @Scheduled(cron = "0 0 2 * * ?")
+    @Scheduled(cron = "0 0 1 * * ?")
     public void task() throws Exception {
       log.info("【KonoTask】开始时间:{}",System.currentTimeMillis());
       work();
