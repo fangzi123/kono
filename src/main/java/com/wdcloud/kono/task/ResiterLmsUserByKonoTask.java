@@ -56,26 +56,26 @@ public class ResiterLmsUserByKonoTask {
     private void work() {
        List<ErpUser> erpUserList= erpUserMapper.select(ErpUser.builder().status(0).build());
         if (ListUtils.isNotEmpty(erpUserList)) {
-            erpUserList.forEach(erpUser -> {
-
-                List<ErpUserprofil> erpUserprofilList= erpUserprofilMapper.select(ErpUserprofil.builder().idUser(erpUser.getIdUser()).build());
+            for (ErpUser erpUser : erpUserList) {
+                List<ErpUserprofil> erpUserprofilList = erpUserprofilMapper.select(ErpUserprofil.builder().idUser(erpUser.getIdUser()).build());
                 if (ListUtils.isEmpty(erpUserprofilList)) {
-                    log.info("IdUser===={}没有机构",erpUser.getIdUser());
+                    log.info("IdUser===={}没有机构", erpUser.getIdUser());
+                    continue;
                 }
                 ErpUserprofil erpUserprofil = erpUserprofilList.get(0);
 
-                ErpEntitejuridiqueprofil erpEntitejuridiqueprofil = erpEntitejuridiqueprofilMapper.selectOne(ErpEntitejuridiqueprofil.builder().idProfil(erpUserprofil.getIdProfil()).build());
-                if (erpEntitejuridiqueprofil != null) {
+                List<ErpEntitejuridiqueprofil> erpEntitejuridiqueprofilList = erpEntitejuridiqueprofilMapper.select(ErpEntitejuridiqueprofil.builder().idProfil(erpUserprofil.getIdProfil()).build());
+                if (ListUtils.isNotEmpty(erpEntitejuridiqueprofilList)) {
                     //机构ID
-                    ErpEntitejuridique que=erpEntitejuridiqueMapper.selectOne(ErpEntitejuridique.builder().idEntitejuridique(erpEntitejuridiqueprofil.getIdEntitejuridique()).build());
-                    SysOrg sysOrg=sysOrgMapper.selectOne(SysOrg.builder().name(que.getNom()).build());
+                    ErpEntitejuridique que = erpEntitejuridiqueMapper.selectOne(ErpEntitejuridique.builder().idEntitejuridique(erpEntitejuridiqueprofilList.get(0).getIdEntitejuridique()).build());
+                    SysOrg sysOrg = sysOrgMapper.selectOne(SysOrg.builder().name(que.getNom()).build());
                     if (sysOrg == null) {
                         JSONObject json = new JSONObject();
-                        json.put("userName",que.getCode()+que.getCode());
-                        json.put("pwd","12345678");
-                        json.put("orgName",que.getNom());
-                        String org=HttpClientUtil.sendPostRequestByJson(initRootOrg, json.toJSONString());
-                        log.info("org注册结果==>{}",org);
+                        json.put("userName", que.getCode() + que.getCode());
+                        json.put("pwd", "12345678");
+                        json.put("orgName", que.getNom());
+                        String org = HttpClientUtil.sendPostRequestByJson(initRootOrg, json.toJSONString());
+                        log.info("org注册结果==>{}", org);
                         try {
                             Thread.sleep(500);
                         } catch (InterruptedException e) {
@@ -94,16 +94,16 @@ public class ResiterLmsUserByKonoTask {
                             .password(erpUser.getPassword())
                             .email(erpUser.getMailgem())
                             .build();
-                    String rlt=HttpClientUtil.sendPostRequestByJson(lmsUrl, JSON.toJSONString(signUpVo));
-                    log.info("======用户注册结果======>\n{}",rlt);
+                    String rlt = HttpClientUtil.sendPostRequestByJson(lmsUrl, JSON.toJSONString(signUpVo));
+                    log.info("======用户注册结果======>\n{}", rlt);
                     if (Code.OK.code == JSON.parseObject(rlt).getIntValue("code")) {
                         erpUserMapper.updateByPrimaryKeySelective(ErpUser.builder().id(erpUser.getId()).status(1).build());
                     }
 
-                }else{
-                    log.info("IdUser={},IdProfil={} 查无机构 erpEntitejuridiqueprofil",erpUserprofil.getIdUser(),erpUserprofil.getIdProfil());
+                } else {
+                    log.info("IdUser={},IdProfil={} 查无机构 erpEntitejuridiqueprofil", erpUserprofil.getIdUser(), erpUserprofil.getIdProfil());
                 }
-            });
+            }
         }
     }
 
